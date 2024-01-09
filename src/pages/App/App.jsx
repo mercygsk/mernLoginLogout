@@ -1,20 +1,22 @@
 // import dependencies
-import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import  { useState } from 'react'
+import { Routes, Route, Navigate} from 'react-router-dom';
+import styles from './App.module.css';
+
 
 // import my functionality that I've added
-import { getUser } from '../utilities/users-services';
+import { getUser } from '../../utilities/users-services';
 
 // css
 import './App.css'
 
 // import pages
-import AuthPage from './AuthPage';
-import NewOrderPage from './NewOrderPage';
-import OrderHistoryPage from './OrderHistoryPage';
+import AuthPage from '../Authpage/AuthPage';
+import NewOrderPage from '../NewOrderPage/NewOrderPage';
+import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage';
 
 // import components
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 
 function App() {
   const [user, setUser] = useState(getUser());
@@ -25,6 +27,7 @@ function App() {
   // the setter function should be named according to convention
   return (
     <>
+    <main className={styles.App}>
       {
         user
           ?
@@ -33,11 +36,15 @@ function App() {
             < Routes >
               <Route path='/orders/new' element={<NewOrderPage />}/>
               <Route path='/orders' element={<OrderHistoryPage />}/>
+               {/* redirect to /orders/new if path in address bar hasn't matched a <Route> above */}
+            <Route path="/*" element={<Navigate to="/orders/new" />} />
+          
             </Routes>
           </>
           :
           < AuthPage setUser={setUser} />
       }
+      </main>
     </>
   )
 }

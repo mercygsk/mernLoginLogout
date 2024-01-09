@@ -1,5 +1,5 @@
 import React from 'react'
-import {checkToken} from '../utilities/users-services';
+import {checkToken} from '../../utilities/users-services';
 
 function OrderHistoryPage() {
   const handleCheckToken = async () => {
